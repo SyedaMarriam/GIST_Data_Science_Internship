@@ -30,7 +30,7 @@ The dataset covers July 2016 through August 2018. Some fields contain missing or
 ## Project Folder Structure
 
 ```text
-E-commerce Data Science Internship/
+GIST_Data_Science_Internship/
 ├── README.md
 ├── Task_1/
 │   ├── Task_1.ipynb
