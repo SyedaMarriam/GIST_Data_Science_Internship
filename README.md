@@ -1,230 +1,345 @@
-# GIST_Data_Science_Internship Project
+# GIST Data Science Internship Project
 
 ## 1. Project Overview
 
-This project examines an e-commerce order-item dataset through data cleaning, exploratory data analysis (EDA), and an existing Power BI dashboard. Task 1 and Task 2 are provided as separate Jupyter notebooks. The existing Power BI file is preserved as Task 4.
+This project focuses on analyzing an e-commerce order-item dataset through data cleaning, exploratory data analysis (EDA), and interactive Power BI visualization.
 
-**Task 3, prediction, was intentionally skipped.** This project contains no predictive model, model evaluation, or prediction results.
+The project includes separate Jupyter notebooks for data cleaning and exploratory analysis, along with an interactive Power BI dashboard for presenting business insights.
+
+The main objective is to transform raw data into meaningful information and identify useful patterns related to sales, orders, customers, products, and payment methods.
 
 ## 2. Project Objectives
 
-- Check the source data for missing values, placeholders, duplicates, and unusual numeric values.
-- Create a cleaned dataset without guessing missing information or discarding potentially valid transactions.
-- Explore sales, order, product category, payment, and time patterns using clear summaries and charts.
-- Preserve and review the existing Power BI dashboard without replacing its design.
-- Document evidence-based findings and limitations in a reproducible project structure.
+- Inspect and clean the original dataset.
+- Identify missing values, placeholders, duplicates, and unusual numeric values.
+- Perform exploratory data analysis using Python.
+- Analyze sales, orders, product categories, payment methods, and monthly trends.
+- Create meaningful charts and statistical summaries.
+- Present key business metrics through an interactive Power BI dashboard.
+- Document the complete workflow and findings.
 
 ## 3. Project Scope
 
-The project covers:
+The project covers three main areas:
 
-- **Task 1:** Basic data cleaning and exploration.
-- **Task 2:** Exploratory analysis of relationships, trends, and business patterns.
-- **Task 4:** Review of the existing interactive Power BI dashboard.
+- **Task 1:** Basic Data Cleaning and Exploration.
+- **Task 2:** Exploratory Data Analysis (EDA).
+- **Task 4:** Interactive Power BI Dashboard.
 
-The analysis is descriptive. It does not estimate future outcomes or establish that observed relationships are causal.
+The analysis is descriptive and focuses on understanding historical business data and identifying trends.
 
 ## 4. Dataset Description
 
-The source file, `Dataset/Original_Dataset.csv`, contains **584,524 order-item rows** and **21 columns**. Fields include item and order identifiers, status, date, SKU, price, quantity, order total, product category, discount, payment method, and customer ID.
+The original dataset, `Dataset/Original_Dataset.csv`, contains **584,524 order-item rows and 21 columns**.
 
-The recorded dates run from **July 1, 2016, through August 28, 2018**. The first and last calendar years are partial. The source does not identify a currency, so monetary amounts in the notebooks and this README are described as *dataset units*.
+The dataset includes information about:
 
-The dataset includes:
+- Order and item identifiers
+- Order status and dates
+- Product SKU and category
+- Product prices and quantities
+- Grand total and discounts
+- Payment methods
+- Customer IDs
+
+The recorded dates range from **July 1, 2016, to August 28, 2018**.
+
+### Data Quality Observations
 
 - `Not provided` placeholders in `sales_commission_code`.
 - One `#REF!` spreadsheet error in `BI Status`.
-- 11 missing `Customer ID` values.
-- Very large and some negative values in numeric fields. These are flagged for review, not assumed to be errors.
+- 11 missing values in `Customer ID`.
+- Some unusually large and negative numeric values.
 
-The cleaned output is `Dataset/Cleaned_Dataset.csv`. It retains the original rows while converting the known text placeholders to missing values.
+These values were reviewed and documented rather than automatically removed.
+
+The cleaned dataset is saved as `Dataset/Cleaned_Dataset.csv`.
+
+It retains all original rows while standardizing known text placeholders as missing values.
+
+**Note:** The dataset does not specify a currency. Therefore, monetary values are represented as dataset units.
 
 ## 5. Tools and Technologies Used
 
 - Python
 - Jupyter Notebook
-- Pandas and NumPy
-- Matplotlib and Seaborn
-- Power BI Desktop (to open and interact with the existing `.pbix` file)
-
-Power BI is not a Python dependency.
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
+- Power BI Desktop
 
 ## 6. Project Folder Structure
 
 ```text
 GIST_Data_Science_Internship/
-├── README.md
-├── requirements.txt
+│
 ├── Dataset/
 │   ├── Original_Dataset.csv
 │   └── Cleaned_Dataset.csv
+│
 ├── Task_1/
 │   └── Task_1.ipynb
+│
 ├── Task_2/
 │   └── Task_2.ipynb
-└── Task_4/
-    └── PowerBI_Dashboard.pbix
+│
+├── Task_4/
+│   └── PowerBI_Dashboard.pbix
+│
+├── README.md
+└── requirements.txt
 ```
 
+## 7. Task 1 — Data Cleaning and Exploration
 
-## 7. Task 1 — Data Cleaning & Exploration
+**Notebook:** `Task_1/Task_1.ipynb`
 
-Notebook: [`Task_1/Task_1.ipynb`](Task_1/Task_1.ipynb)
+This task focuses on understanding and preparing the original dataset.
 
-Task 1 reads the original CSV and:
+### Activities Performed
 
-1. Reviews its dimensions, columns, data types, and numeric summaries.
-2. Separately counts source nulls and known text placeholders before cleaning.
-3. Converts `Not provided` and `#REF!` to missing values. Missing IDs and other unknown values are left blank rather than filled with guesses.
-4. Checks for exact duplicate rows. No exact duplicate rows were found, so no rows were removed.
-5. Uses the IQR rule and boxplots to flag unusual `price`, `qty_ordered`, `grand_total`, and `discount_amount` values. The flagged rows are retained because an extreme transaction may be genuine.
-6. Summarizes the main numeric fields and plots their distributions and the most common product categories.
-7. Saves the result to `Dataset/Cleaned_Dataset.csv` for Task 2.
+1. Examined dataset dimensions, columns, and data types.
+2. Identified missing values and text placeholders.
+3. Standardized `Not provided` and `#REF!` values.
+4. Checked exact duplicate records.
+5. Applied the IQR method to identify unusual numeric values.
+6. Created boxplots and distribution charts.
+7. Analyzed important numerical fields and product categories.
+8. Exported the cleaned dataset for further analysis.
 
-After placeholder standardization, the cleaned data has **476,191 missing cells**: 476,179 in `sales_commission_code`, one in `BI Status`, and 11 in `Customer ID`. Missing commission codes make up **81.464%** of that column. The IQR review flags records for follow-up; it does not automatically classify them as errors.
+### Results
 
-## 8. Task 2 — Exploratory Data Analysis
+- Original records: 584,524.
+- Exact duplicate rows found: 0.
+- Missing cells after placeholder standardization: 476,191.
+- Missing commission codes represent approximately 81.464% of that column.
 
-Notebook: [`Task_2/Task_2.ipynb`](Task_2/Task_2.ipynb)
+Unusual numeric values were flagged for review rather than automatically deleted.
 
-Task 2 uses the cleaned output from Task 1 and focuses on business analysis rather than repeating the cleaning workflow. It explores:
+## 8. Task 2 — Exploratory Data Analysis (EDA)
+
+**Notebook:** `Task_2/Task_2.ipynb`
+
+This task explores business patterns and relationships in the cleaned dataset.
+
+### Analysis Performed
 
 - Yearly and monthly sales trends.
-- Fulfilled item sales by product category and SKU.
-- Payment method and order status, counting each order once for order-level comparisons.
-- The relationship between price and quantity, including a reproducible sample scatter plot.
-- Correlations among price, quantity, discounts, and calculated item sales.
+- Sales distribution across product categories.
+- Top-performing products and SKUs.
+- Payment method analysis.
+- Order status distribution.
+- Relationship between product price and quantity.
+- Correlation analysis among numerical variables.
 
-For notebook sales comparisons, item sales are calculated as `price × qty_ordered − discount_amount`. The notebook defines fulfilled orders as those with `complete` or `received` status. These are the analysis definitions used in this project, not verified accounting measures. The source includes multiple item rows per order, so the notebook avoids summing `grand_total` for its item-level sales analysis.
+For item-level analysis, sales were calculated using:
 
+`Item Sales = (Price × Quantity Ordered) − Discount Amount`
+
+Fulfilled orders were defined as orders with `complete` or `received` status.
+
+### Key Results
+
+- Total unique orders: 408,782.
+- Fulfilled unique orders: 205,321.
+- Fulfilled item sales: approximately 1,216,863,948 dataset units.
+- Mobiles & Tablets contributed approximately 583,508,701 dataset units.
+- Cash on Delivery was the most frequently used payment method, with 182,449 unique orders.
+- Canceled orders: 148,656.
+- November 2017 recorded the highest fulfilled item sales, approximately 302,551,730 dataset units.
+
+These results describe patterns in the available dataset and do not establish causation or profitability.
 
 ## 9. Task 4 — Interactive Power BI Dashboard
 
-Dashboard: [`Task_4/PowerBI_Dashboard.pbix`](Task_4/PowerBI_Dashboard.pbix)
+**Dashboard:** `Task_4/PowerBI_Dashboard.pbix`
 
-The existing one-page dashboard is preserved. Its report definition includes:
+An interactive Power BI dashboard was used to present important e-commerce business metrics and visual insights.
 
-- **KPI cards:** Total Sales, Total Orders, Total Customers, Discount, Completed, and Cancelled.
-- **Charts:** Sales by Product Category, Monthly Customer Distribution, Order Distribution by Status, and Monthly Sales Trend.
-- **Slicers:** Year and Discount Status.
-- A report heading, **E_COMMERCE SALES ANALYTICS**.
+**Data Scope:** The Power BI dashboard analysis was performed on a selected sample of **1,000 rows** from the original dataset. Therefore, dashboard results represent a sample-based analysis rather than the complete 584,524-row dataset.
 
-The layout places the heading and slicers above the KPI cards, with charts arranged below on a wide, single-page canvas. The visual definitions use a consistent navy, blue, and muted-gray palette. The report metadata shows that the category chart aggregates `grand_total` by category, while the monthly sales trend sums the `sales` field over a date hierarchy. The visuals also reference measures named `Total Orders`, `Total Customers`, `complete orders`, and `cancel orders`. Their DAX definitions and the dashboard's displayed values could not be verified from the report definition alone; inspect them in Power BI Desktop before relying on them.
+### Dashboard Components
 
-### Dashboard review recommendations
+**KPI Cards**
+- Total Sales
+- Total Orders
+- Total Customers
+- Discount
+- Completed Orders
+- Cancelled Orders
 
-- **Check category sales aggregation:** the source is at order-item level and `grand_total` can repeat across items in an order. Confirm that summing it does not double-count order totals. Consider an item-level sales calculation or an order-level distinct total, with the chosen definition stated in the chart title or tooltip.
-- **Clarify the sales definition:** identify which statuses are included and whether the value is item sales, order total, gross sales, or another measure.
-- **Label units:** the dataset does not name a currency. Format cards and axes with an explicit unit or note rather than implying a currency.
-- **Verify card and slicer behavior:** inspect the DAX and test that Year and Discount Status filters affect the intended cards and charts.
-- **Keep labels consistent:** make sure the displayed KPI titles clearly match their measure definitions and use consistent number formatting. Preserve the existing navy-and-blue palette as visuals are updated.
+**Visualizations**
+- Sales by Product Category
+- Monthly Customer Distribution
+- Order Distribution by Status
+- Monthly Sales Trend
 
-These are recommendations only. The `.pbix` file was not edited, and the dashboard should be opened in Power BI Desktop for visual and DAX validation.
+**Interactive Filters**
+- Year
+- Discount Status
+
+### Dashboard Design
+
+- Professional single-page layout.
+- Navy blue, blue, and muted-gray color palette.
+- KPI cards positioned at the top.
+- Charts arranged below the summary metrics.
+- Interactive slicers for filtering the report.
+
+The existing Power BI dashboard file is preserved.
+
+### Dashboard Review
+
+- Verify sales calculations to avoid double-counting repeated order totals.
+- Check the definitions of completed and cancelled orders.
+- Validate DAX measures in Power BI Desktop.
+- Confirm that slicers filter the intended visuals.
+- Clearly identify monetary values as dataset units because the currency is unspecified.
+- Remember that dashboard results are based on the selected 1,000-row sample.
 
 ## 10. Methodology
 
-1. Preserve the original CSV and inspect its shape, columns, and data types.
-2. Standardize only known missing-value placeholders; do not infer missing identifiers or statuses.
-3. Check exact duplicates and flag outliers for review without automatic removal.
-4. Save the cleaned dataset and use it as the input to Task 2.
-5. Define order-item sales and fulfilled statuses explicitly before comparing results.
-6. Use item-level calculations for item sales and unique order IDs for order-level counts.
-7. Interpret trends within the available date range and report observations as descriptive findings.
+The project follows a structured data analysis workflow:
+
+1. Load and inspect the original dataset.
+2. Identify missing values and placeholders.
+3. Clean known placeholder values.
+4. Check duplicate records and unusual numeric values.
+5. Save the cleaned dataset.
+6. Perform exploratory analysis using Python.
+7. Generate charts and statistical summaries.
+8. Present business metrics through Power BI.
+9. Document findings and limitations.
 
 ## 11. Key Findings and Insights
 
-The following findings come from the Task 2 notebook and use its stated definitions:
+The exploratory analysis identified several important patterns:
 
-- The dataset has **408,782 unique orders**; **205,321** have `complete` or `received` status.
-- Fulfilled item sales total approximately **1,216,863,948 dataset units**.
-- **Mobiles & Tablets** is the largest fulfilled-sales category, at approximately **583,508,701 dataset units** (**47.95%** of fulfilled item sales).
-- **Cash on delivery** is the most common payment method, used for **182,449 unique orders** (about **44.6%**).
-- **148,656 unique orders** are marked canceled (about **36.4%**).
-- **November 2017** is the highest fulfilled-sales month, at approximately **302,551,730 dataset units**.
-- The price-to-quantity correlation among fulfilled rows is approximately **−0.019**, indicating little linear association in this dataset. Correlations with calculated item sales are partly expected because price, quantity, and discount are inputs to that calculation.
+- The dataset contains 408,782 unique orders.
+- Approximately 205,321 unique orders are classified as fulfilled.
+- Mobiles & Tablets is the largest fulfilled-sales category.
+- Cash on Delivery is the most common payment method.
+- Approximately 36.4% of unique orders are marked as cancelled.
+- November 2017 recorded the highest fulfilled item sales.
+- The price-to-quantity correlation among fulfilled rows is approximately -0.019, indicating very little linear association.
 
-These are patterns in the available records, not proof of cause or profitability.
+These insights help describe historical e-commerce activity and customer purchasing patterns.
 
-## 12. Dashboard Features
+## 12. Installation and Environment Setup
 
-The existing dashboard combines summary cards, category and time charts, a status distribution, and Year and Discount Status slicers on one report page. See [Task 4](#10-task-4--interactive-power-bi-dashboard) for the visual inventory and specific review recommendations.
+### Prerequisites
 
-## 13. How to Install and Run the Project
+Install the following software before running the project:
 
-The notebooks use paths relative to their task folders. Start Jupyter from the relevant folder so the CSV paths resolve as written.
+- **Python 3:** Required for data cleaning and analysis.
+- **Jupyter Notebook:** Required to run the Python notebooks.
+- **Power BI Desktop:** Required to open and interact with the dashboard.
+- **Visual Studio Code (Optional):** Can be used to manage the project files and notebooks.
 
-### Set up Python and Jupyter (PowerShell)
+### Step 1: Install Python
 
-From the project root:
+1. Visit the official Python website: https://www.python.org/downloads/
+2. Download and install Python 3.
+3. During installation, select **Add Python to PATH**.
+4. Verify installation using PowerShell:
 
 ```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt jupyter ipykernel
+python --version
+pip --version
 ```
 
-### Run Task 1
+### Step 2: Open the Project
+
+1. Download or clone this repository.
+2. Extract the project folder if downloaded as a ZIP file.
+3. Open the `GIST_Data_Science_Internship` folder in VS Code.
+4. Open a terminal in the project root directory.
+
+### Step 3: Install Python Libraries
+
+Install the required dependencies:
 
 ```powershell
-Set-Location Task_1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+pip install jupyter ipykernel
+```
+
+### Step 4: Run Task 1
+
+Open the terminal from the project root and run:
+
+```powershell
+cd Task_1
 python -m jupyter notebook Task_1.ipynb
 ```
 
-Run the notebook from top to bottom. This reads `Dataset/Original_Dataset.csv` and writes `Dataset/Cleaned_Dataset.csv`.
+Run all notebook cells from top to bottom.
 
-### Run Task 2
+This notebook reads the original dataset and generates the cleaned dataset.
 
-After Task 1 has completed successfully, open a new terminal at the project root (or stop the first Jupyter server) and run:
+### Step 5: Run Task 2
+
+After Task 1 completes successfully, return to the project root and run:
 
 ```powershell
-Set-Location Task_2
+cd ..
+cd Task_2
 python -m jupyter notebook Task_2.ipynb
 ```
 
-Run the notebook from top to bottom. It reads `Dataset/Cleaned_Dataset.csv`.
+Run all notebook cells from top to bottom.
 
-### Open the dashboard
+This notebook uses the cleaned dataset generated by Task 1.
 
-Open `Task_4/PowerBI_Dashboard.pbix` in Power BI Desktop. Power BI Desktop is installed separately and is not included in the Python requirements.
+### Step 6: Install and Open Power BI Desktop
 
-## 14. Required Python Libraries
+1. Visit the official Microsoft Power BI website: https://www.microsoft.com/en-us/power-platform/products/power-bi/desktop
+2. Download Power BI Desktop.
+3. Install the application on your computer.
+4. Open Power BI Desktop.
+5. Select **File → Open Report**.
+6. Browse to `Task_4/PowerBI_Dashboard.pbix`.
+7. Open the dashboard and interact with the available charts and filters.
 
-The notebooks import these Python libraries:
+**Note:** Power BI Desktop is installed separately and is not included in the Python requirements.
 
-- `pandas`
-- `numpy`
-- `matplotlib`
-- `seaborn`
+## 13. Required Python Libraries
 
-Jupyter and `ipykernel` are notebook-running tools and are installed alongside the requirements in the setup commands above.
+The project uses the following Python libraries:
 
-## 15. Project Outcomes
+- `pandas` — Data manipulation and analysis.
+- `numpy` — Numerical calculations.
+- `matplotlib` — Data visualization.
+- `seaborn` — Statistical data visualization.
 
-- A documented cleaned copy of the supplied dataset, with the original retained.
-- Separate notebooks for data cleaning and descriptive EDA.
-- Reproducible charts and findings based on the provided data.
-- The existing Power BI dashboard retained under Task 4, with review recommendations documented.
-- A clear record that prediction was intentionally skipped.
+Jupyter Notebook and ipykernel are installed separately using the setup commands above.
 
-## 16. Limitations
+## 14. Project Outcomes
 
-- The dataset covers partial years at the beginning and end of the date range.
-- No currency is identified, and product costs are not available; sales values cannot be interpreted as profit.
-- Some source statuses and fields are unusual or incomplete. Placeholder standardization does not recover the true missing values.
-- IQR flags identify statistical extremes, not confirmed data errors.
-- The notebook's fulfilled-sales formula and status definition are analysis choices; they may differ from the dashboard's measures or accounting definitions.
-- The Power BI report's DAX formulas and interactive behavior were not verified in Power BI Desktop.
-- Task 3 prediction was not implemented, as intended.
+- Original and cleaned e-commerce datasets.
+- Separate Jupyter notebooks for data cleaning and EDA.
+- Statistical summaries and data visualizations.
+- Business insights based on historical transaction records.
+- An interactive Power BI dashboard based on a 1,000-row sample.
+- Documented methodology, findings, and limitations.
 
-## 19. Future Improvements
+## 15. Limitations
 
-- Validate the dashboard's DAX measures and filter interactions in Power BI Desktop.
-- Confirm the business definitions for sales, completed orders, discounts, and cancellations with the data owner.
-- Add data-quality checks for inconsistent order-level values and date parsing.
-- Compare equivalent time periods when evaluating seasonal changes.
-- Add product cost, margin, and return information if profitability analysis is required.
+- The dataset contains partial calendar years at the beginning and end of its date range.
+- The currency is not specified.
+- Some fields contain missing or unusual values.
+- Statistical outliers are not necessarily data errors.
+- The fulfilled-sales calculation is an analytical definition and may differ from accounting measures.
+- Power BI dashboard results are based on 1,000 selected rows, not the complete dataset.
+- Dashboard DAX measures and filter interactions should be validated in Power BI Desktop.
+- Product costs and profit margins are not available.
 
-## 20. Conclusion
+## 16. Conclusion
 
-This project provides a transparent workflow from data cleaning to exploratory business analysis and a review of the existing dashboard. Missing information and unusual values are documented rather than guessed away, and the notebook sales and order-count definitions are stated so the findings can be explained and reproduced. Task 3 remains intentionally skipped; no predictive results are presented.
+This project demonstrates a descriptive data analysis workflow, starting with data cleaning and continuing through exploratory data analysis and interactive Power BI visualization.
+
+Python was used to prepare the dataset, explore business patterns, and generate meaningful insights, while Power BI provided an interactive way to present important business metrics.
+
+The project highlights the importance of data quality, accurate analysis, clear visualizations, and evidence-based business insights.
